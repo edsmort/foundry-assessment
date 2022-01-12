@@ -20,7 +20,7 @@ namespace foundry_assessment
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    foundry_assessment.Models.Employee employee = await response.Content.ReadAsAsync<foundry_assessment.Models.Employee>();
+                    foundry_assessment.Models.Employee Employee = await response.Content.ReadAsAsync<foundry_assessment.Models.Employee>();
                 }
                 else
                 {
