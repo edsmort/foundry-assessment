@@ -1,16 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Employee.aspx.cs" Inherits="foundry_assessment.Employee" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <div>
-        <article>
-            <h1>hello world</h1>
-        </article>
-    </div>
-</body>
-</html>
+﻿<%@ Page Title="Employees" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Employee.aspx.cs" Inherits="foundry_assessment.Employee" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:GridView ID="gvEmployees" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false">
+        <Columns>
+            <asp:BoundField DataField="Id" HeaderText="Id" />
+            <asp:BoundField DataField="Name" HeaderText="Name" />
+            <asp:CommandField ShowEditButton="true" />
+            <asp:CommandField ShowDeleteButton="true" />
+        </Columns>
+        <EmptyDataTemplate>No records available</EmptyDataTemplate>
+    </asp:GridView>
+</asp:Content>
