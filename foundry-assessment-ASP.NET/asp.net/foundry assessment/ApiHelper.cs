@@ -12,7 +12,8 @@ namespace foundry_assessment
 
         public static void InitializeClient()
         {
-            hc = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler();
+            hc = new HttpClient(handler, false);
             hc.BaseAddress = new Uri("http://localhost:5000/");
             hc.DefaultRequestHeaders.Accept.Clear();
         }

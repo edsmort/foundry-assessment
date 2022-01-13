@@ -13,7 +13,6 @@ namespace foundry_assessment.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Engagements> Engagements { get; set; }
     }
-
     public class Employee
     {
         public int Id { get; set; }
@@ -24,7 +23,7 @@ namespace foundry_assessment.Models
         public int Id { get; set; }
         public string Name { get; set; }
     }
-    public class Engagements
+    public class Engagement
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -34,4 +33,19 @@ namespace foundry_assessment.Models
         public DateTime started { get; set; }
         public DateTime ended { get; set; }
     }
+    public class ClientList
+    {
+        public List<Client> Clients { get; set; }
+    }
+
+    public class EmployeeList
+    {
+        public List<Employee> Employees { get; set; }
+    }
+
+    public class EngagementList
+    {
+        public List<Engagements> Engagements { get; set; }
+    }
+
 }

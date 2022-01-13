@@ -9,18 +9,28 @@ using foundry_assessment.Models;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace foundry_assessment
 {
     public partial class Employee : System.Web.UI.Page
     {
-        protected async void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            using (HttpResponseMessage response = await ApiHelper.hc.GetAsync("employees"))
+            using (var hc = new HttpClient())
             {
-                if (response.IsSuccessStatusCode)
+                var response = hc.GetAsync("http://localhost:5000/employees");
+                response.Wait();
+                var result = response.Result;
+                System.Diagnostics.Debug.WriteLine(result);
+                if (result.IsSuccessStatusCode)
                 {
-                    foundry_assessment.Models.Employee Employee = await response.Content.ReadAsAsync<foundry_assessment.Models.Employee>();
+                    var jsonResponse = result.Content.ReadAsStringAsync().Result;
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+                    var convertedData = JsonConvert.DeserializeObject<List<EmployeeModel>>(jsonResponse);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+                    gvEmployees.DataSource = convertedData;
+                    gvEmployees.DataBind();
                 }
                 else
                 {
@@ -29,7 +39,17 @@ namespace foundry_assessment
                     gvEmployees.DataBind();
                 }
             }
+        }
 
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void gvEmployees_UpdateItem(int id)
+        {
+
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void gvEmployees_DeleteItem(int id)
+        {
 
         }
     }
