@@ -10,14 +10,14 @@
 
     <div class="row">
         <div class="col-md-4">
-            <h2>Employee</h2>
+            <h2>Employees</h2>
             <p></p>
             <p>
                 <a class="btn btn-default" href="Employee">View Employees &raquo;</a>
             </p>
         </div>
         <div class="col-md-4">
-            <h2>Client</h2>
+            <h2>Clients</h2>
             <p></p>
             <p>
                 <a class="btn btn-default" href="Client">View Clients &raquo;</a>
