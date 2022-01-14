@@ -14,6 +14,11 @@
         <asp:Button ID="btnAddClient" CssClass="btn btn-primary" Text="Add New Client" runat="server" BorderSpacing="0" OnClick="btnAddClient_Click" />
     </div>
     <br />
+    <div>
+        <asp:Label runat="server" Text="Search"></asp:Label>
+        <br />
+        <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="txtSearch_TextChanged" AutoPostBack="true" Width="155px"></asp:TextBox>
+    </div>
     <asp:GridView ID="gvClients" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
         OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit" >
         <Columns>

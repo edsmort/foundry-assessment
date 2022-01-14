@@ -121,5 +121,10 @@ namespace foundry_assessment
             addName.Text = string.Empty;
             GetClientsAndBind();
         }
+
+        protected void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
