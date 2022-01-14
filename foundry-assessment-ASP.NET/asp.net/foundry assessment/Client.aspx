@@ -15,7 +15,7 @@
     </div>
     <br />
     <asp:GridView ID="gvClients" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
-        OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit" EnableViewState="false">
+        OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit" >
         <Columns>
             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="true" />
             <asp:BoundField DataField="Name" HeaderText="Name" />

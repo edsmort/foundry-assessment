@@ -54,13 +54,9 @@ namespace foundry_assessment
                     name = newName
                 };
                 string updated = JsonConvert.SerializeObject(client);
-                System.Diagnostics.Debug.WriteLine(updated);
                 HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(payload);
                 var response = hc.PostAsync("http://localhost:5000/clients/", payload);
                 response.Wait();
-                var result = response.Result.Content.ReadAsStringAsync().Result;
-                System.Diagnostics.Debug.WriteLine(result);
             }
         }
 
@@ -73,13 +69,18 @@ namespace foundry_assessment
                     name = newName
                 };
                 string updated = JsonConvert.SerializeObject(client);
-                System.Diagnostics.Debug.WriteLine(updated);
                 HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(payload);
                 var response = hc.PutAsync("http://localhost:5000/clients/" + id, payload);
                 response.Wait();
-                var result = response.Result.Content.ReadAsStringAsync().Result;
-                System.Diagnostics.Debug.WriteLine(result);
+            }
+        }
+
+        public void DeleteClient(string id)
+        {
+            using (var hc = new HttpClient())
+            {
+                var response = hc.DeleteAsync("http://localhost:5000/clients/" + id);
+                response.Wait();
             }
         }
 
@@ -91,7 +92,10 @@ namespace foundry_assessment
 
         protected void gvClients_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
+            GridViewRow row = gvClients.Rows[e.RowIndex];
+            string id = row.Cells[0].Text;
+            DeleteClient(id);
+            GetClientsAndBind();
         }
 
         protected void gvClients_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -100,8 +104,6 @@ namespace foundry_assessment
             string id = row.Cells[0].Text;
             TextBox txtName = (TextBox)row.Cells[1].Controls[0];
             string name = txtName.Text;
-            System.Diagnostics.Debug.WriteLine(id);
-            System.Diagnostics.Debug.WriteLine(name);
             EditClient(id, name);
             gvClients.EditIndex = -1;
             GetClientsAndBind();
@@ -116,6 +118,7 @@ namespace foundry_assessment
         protected void btnAddClient_Click(object sender, EventArgs e)
         {
             AddClient(addName.Text);
+            addName.Text = string.Empty;
             GetClientsAndBind();
         }
     }

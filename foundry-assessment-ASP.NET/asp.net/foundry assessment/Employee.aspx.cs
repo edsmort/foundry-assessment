@@ -10,6 +10,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace foundry_assessment
 {
@@ -17,18 +18,24 @@ namespace foundry_assessment
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                GetEmployeesAndBind();
+            }
+
+        }
+
+        public void GetEmployeesAndBind()
+        {
             using (var hc = new HttpClient())
             {
                 var response = hc.GetAsync("http://localhost:5000/employees");
                 response.Wait();
                 var result = response.Result;
-                System.Diagnostics.Debug.WriteLine(result);
                 if (result.IsSuccessStatusCode)
                 {
                     var jsonResponse = result.Content.ReadAsStringAsync().Result;
-                    System.Diagnostics.Debug.WriteLine(jsonResponse);
                     var convertedData = JsonConvert.DeserializeObject<List<EmployeeModel>>(jsonResponse);
-                    System.Diagnostics.Debug.WriteLine(jsonResponse);
                     gvEmployees.DataSource = convertedData;
                     gvEmployees.DataBind();
                 }
@@ -41,16 +48,81 @@ namespace foundry_assessment
             }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
-        public void gvEmployees_UpdateItem(int id)
+        public void AddEmployee(string newName)
         {
-
+            using (var hc = new HttpClient())
+            {
+                var employee = new
+                {
+                    name = newName
+                };
+                string updated = JsonConvert.SerializeObject(employee);
+                HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
+                var response = hc.PostAsync("http://localhost:5000/employees/", payload);
+                response.Wait();
+                var result = response.Result.Content.ReadAsStringAsync().Result;
+            }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
-        public void gvEmployees_DeleteItem(int id)
+        public void EditEmployee(string id, string newName)
         {
+            using (var hc = new HttpClient())
+            {
+                var employee = new
+                {
+                    name = newName
+                };
+                string updated = JsonConvert.SerializeObject(employee);
+                HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
+                var response = hc.PutAsync("http://localhost:5000/employees/" + id, payload);
+                response.Wait();
+            }
+        }
 
+        public void DeleteEmployee(string id)
+        {
+            using (var hc = new HttpClient())
+            {
+                var response = hc.DeleteAsync("http://localhost:5000/employees/" + id);
+                response.Wait();
+            }
+        }
+
+        protected void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            AddEmployee(addName.Text);
+            addName.Text = string.Empty;
+            GetEmployeesAndBind();
+        }
+
+        protected void gvEmployees_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvEmployees.EditIndex = e.NewEditIndex;
+            GetEmployeesAndBind();
+        }
+
+        protected void gvEmployees_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gvEmployees.EditIndex = -1;
+            GetEmployeesAndBind();
+        }
+
+        protected void gvEmployees_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            string id = gvEmployees.Rows[e.RowIndex].Cells[0].Text;
+            DeleteEmployee(id);
+            GetEmployeesAndBind();
+        }
+
+        protected void gvEmployees_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = gvEmployees.Rows[e.RowIndex];
+            string id = row.Cells[0].Text;
+            TextBox txtName = (TextBox)row.Cells[1].Controls[0];
+            string name = txtName.Text;
+            EditEmployee(id, name);
+            gvEmployees.EditIndex = -1;
+            GetEmployeesAndBind();
         }
     }
 }
