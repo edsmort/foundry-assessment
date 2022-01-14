@@ -4,17 +4,18 @@
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Engagements</h2>
-    <table>
-        <thead>
-            <tr><th>Id</th></tr>
-            <tr><th>Name</th></tr>
-            <tr><th>Client</th></tr>
-            <tr><th>Employee</th></tr>
-            <tr><th>Description</th></tr>
-            <tr><th>Started</th></tr>
-            <tr><th>Ended</th></tr>
-        </thead>
-        <tbody id="engagements">
-        </tbody>
-    </table>
+    <asp:GridView ID="gvEngagements" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false">
+        <Columns>
+            <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="true" />
+            <asp:BoundField DataField="Name" HeaderText="Name" />
+            <asp:BoundField DataField="Client" HeaderText="Client" />
+            <asp:BoundField DataField="Employee" HeaderText="Employee" />
+            <asp:BoundField DataField="Description" HeaderText="Description" />
+            <asp:BoundField DataField="Started" HeaderText="Started" />
+            <asp:BoundField DataField="Ended" HeaderText="Ended" />
+            <asp:CommandField ShowEditButton="true" HeaderText="Edit"/>
+            <asp:CommandField ShowDeleteButton="true" HeaderText="Delete"/>
+        </Columns>
+        <EmptyDataTemplate>No records available</EmptyDataTemplate>
+    </asp:GridView>
 </asp:Content>

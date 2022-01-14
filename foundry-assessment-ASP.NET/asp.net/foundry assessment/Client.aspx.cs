@@ -30,6 +30,7 @@ namespace foundry_assessment
                 if (result.IsSuccessStatusCode)
                 {
                     var jsonResponse = result.Content.ReadAsStringAsync().Result;
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
                     var convertedData = JsonConvert.DeserializeObject<List<ClientModel>>(jsonResponse);
                     gvClients.DataSource = convertedData;
                     gvClients.DataBind();
@@ -52,13 +53,17 @@ namespace foundry_assessment
         {
             using (var hc = new HttpClient())
             {
-                ClientModel client = new ClientModel();
-                client.Name = newName;
+                var client = new
+                {
+                    name = newName
+                };
                 string updated = JsonConvert.SerializeObject(client);
+                System.Diagnostics.Debug.WriteLine(updated);
                 HttpContent payload = new StringContent(updated);
+                System.Diagnostics.Debug.WriteLine(payload);
                 var response = hc.PutAsync("http://localhost:5000/clients/" + id, payload);
                 response.Wait();
-                var result = response.Result;
+                var result = response.Result.Content.ReadAsStringAsync().Result;
                 System.Diagnostics.Debug.WriteLine(result);
             }
         }

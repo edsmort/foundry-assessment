@@ -5,7 +5,7 @@
         <asp:Button ID="btnAddClient" Text="Add New Client" runat="server" />
     </div>
     <asp:GridView ID="gvClients" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
-        OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit">
+        OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit" EnableViewState="false">
         <Columns>
             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="true" />
             <asp:BoundField DataField="Name" HeaderText="Name" />

@@ -11,8 +11,8 @@ namespace foundry_assessment.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public virtual ClientModel Client { get; set; }
-        public virtual EmployeeModel Employee { get; set; }
+        public string Client { get; set; }
+        public string Employee { get; set; }
         public string Description { get; set; }
         public DateTime started { get; set; }
         public DateTime ended { get; set; }
