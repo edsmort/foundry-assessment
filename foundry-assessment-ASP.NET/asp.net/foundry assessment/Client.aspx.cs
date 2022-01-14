@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using foundry_assessment.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace foundry_assessment
 {
@@ -44,9 +45,23 @@ namespace foundry_assessment
             }
         }
 
-        public void AddClient()
+        public void AddClient(string newName)
         {
-
+            using (var hc = new HttpClient())
+            {
+                var client = new
+                {
+                    name = newName
+                };
+                string updated = JsonConvert.SerializeObject(client);
+                System.Diagnostics.Debug.WriteLine(updated);
+                HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
+                System.Diagnostics.Debug.WriteLine(payload);
+                var response = hc.PostAsync("http://localhost:5000/clients/", payload);
+                response.Wait();
+                var result = response.Result.Content.ReadAsStringAsync().Result;
+                System.Diagnostics.Debug.WriteLine(result);
+            }
         }
 
         public void EditClient(string id, string newName)
@@ -59,7 +74,7 @@ namespace foundry_assessment
                 };
                 string updated = JsonConvert.SerializeObject(client);
                 System.Diagnostics.Debug.WriteLine(updated);
-                HttpContent payload = new StringContent(updated);
+                HttpContent payload = new StringContent(updated, Encoding.UTF8, "application/json");
                 System.Diagnostics.Debug.WriteLine(payload);
                 var response = hc.PutAsync("http://localhost:5000/clients/" + id, payload);
                 response.Wait();
@@ -95,6 +110,12 @@ namespace foundry_assessment
         protected void gvClients_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             gvClients.EditIndex = -1;
+            GetClientsAndBind();
+        }
+
+        protected void btnAddClient_Click(object sender, EventArgs e)
+        {
+            AddClient(addName.Text);
             GetClientsAndBind();
         }
     }
