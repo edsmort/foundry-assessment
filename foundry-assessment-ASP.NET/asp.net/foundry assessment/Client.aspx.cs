@@ -122,9 +122,52 @@ namespace foundry_assessment
             GetClientsAndBind();
         }
 
+        private DataTable GetClients()
+        {
+            DataTable dt = new DataTable();
+            if (gvClients.HeaderRow != null)
+            {
+                for (int i = 0; i <gvClients.HeaderRow.Cells.Count; i++)
+                {
+                    dt.Columns.Add(gvClients.HeaderRow.Cells[i].Text);
+                }
+            }
+
+            foreach (GridViewRow row in gvClients.Rows)
+            {
+                DataRow dr = dt.NewRow();
+
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    dr[i] = row.Cells[i].Text.Replace(" ", "");
+                }
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        private void SearchText()
+        {
+            DataTable dt = GetClients();
+            DataView dv = new DataView(dt);
+            string SearchExpression = null;
+
+            if (!String.IsNullOrEmpty(txtSearch.Text))
+            {
+                SearchExpression = String.Format("{0} '%{1}%'", gvClients.SortExpression, txtSearch.Text);
+                System.Diagnostics.Debug.WriteLine(SearchExpression);
+                dv.RowFilter = "Name like" + SearchExpression;
+                gvClients.DataSource = dv;
+                gvClients.DataBind();
+            } else
+            {
+                GetClientsAndBind();
+            }
+        }
+
         protected void txtSearch_TextChanged(object sender, EventArgs e)
         {
-
+            SearchText();
         }
     }
 }

@@ -44,7 +44,8 @@ namespace foundry_assessment
                 }
                 else
                 {
-                    // figure out how to do placeholder text
+                    ddlEmployee.DataSource = new DataTable();
+                    ddlEmployee.DataBind();
                 }
             }
         }
@@ -59,7 +60,7 @@ namespace foundry_assessment
                 if (result.IsSuccessStatusCode)
                 {
                     var jsonResponse = result.Content.ReadAsStringAsync().Result;
-                    var convertedData = JsonConvert.DeserializeObject<List<EmployeeModel>>(jsonResponse);
+                    var convertedData = JsonConvert.DeserializeObject<List<ClientModel>>(jsonResponse);
                     ddlClient.DataSource = convertedData;
                     ddlClient.DataTextField = "Name";
                     ddlClient.DataValueField = "Id";
@@ -67,7 +68,8 @@ namespace foundry_assessment
                 }
                 else
                 {
-                    // figure out how to do placeholder text
+                    ddlEmployee.DataSource = new DataTable();
+                    ddlEmployee.DataBind();
                 }
             }
         }
@@ -80,6 +82,10 @@ namespace foundry_assessment
                 response.Wait();
                 var jsonResponse = response.Result.Content.ReadAsStringAsync().Result;
                 var convertedData = JsonConvert.DeserializeObject<EmployeeModel>(jsonResponse);
+                if (convertedData == null)
+                {
+                    return "Deleted employee";
+                }
                 return convertedData.Name;
             }
         }
@@ -92,6 +98,10 @@ namespace foundry_assessment
                 response.Wait();
                 var jsonResponse = response.Result.Content.ReadAsStringAsync().Result;
                 var convertedData = JsonConvert.DeserializeObject<EmployeeModel>(jsonResponse);
+                if (convertedData == null)
+                {
+                    return "Deleted client";
+                }
                 return convertedData.Name;
             }
         }
@@ -106,7 +116,6 @@ namespace foundry_assessment
                 if (result.IsSuccessStatusCode)
                 {
                     var jsonResponse = result.Content.ReadAsStringAsync().Result;
-                    System.Diagnostics.Debug.WriteLine(jsonResponse);
                     var convertedData = JsonConvert.DeserializeObject<List<EngagementModel>>(jsonResponse);
                     foreach (EngagementModel engagement in convertedData)
                     {
@@ -173,7 +182,7 @@ namespace foundry_assessment
             using (var hc = new HttpClient())
             {
                 System.Diagnostics.Debug.WriteLine(id);
-                HttpContent payload = new StringContent("", Encoding.UTF8, "application/json");
+                HttpContent payload = new StringContent("", Encoding.UTF8, "application/json"); // empty string payload to satisfy the argument requirements of PutAsync, even though the end point doesn't read this
                 var response = hc.PutAsync("http://localhost:5000/engagements/" + id + "/end", payload);
                 response.Wait();
                 System.Diagnostics.Debug.WriteLine(response.Result);
@@ -248,9 +257,9 @@ namespace foundry_assessment
 
         protected void gvEngagements_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.DataRow) // ensure header row isn't processed
             {
-                if (Convert.ToDateTime(e.Row.Cells[5].Text) > DateTime.Now && e.Row.Cells[6].Text == "&nbsp;") // "&nbsp" is the string
+                if (Convert.ToDateTime(e.Row.Cells[5].Text) > DateTime.Now && e.Row.Cells[6].Text == "&nbsp;") // "&nbsp" is the string version of null
                 {
                     e.Row.BackColor = Color.LightBlue;
                 }

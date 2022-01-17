@@ -19,6 +19,7 @@
         <br />
         <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="txtSearch_TextChanged" AutoPostBack="true" Width="155px"></asp:TextBox>
     </div>
+    <br />
     <asp:GridView ID="gvClients" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
         OnRowEditing="gvClients_RowEditing" OnRowDeleting="gvClients_RowDeleting" OnRowUpdating="gvClients_RowUpdating" OnRowCancelingEdit="gvClients_RowCancelingEdit" >
         <Columns>
