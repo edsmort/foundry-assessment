@@ -14,6 +14,12 @@
         <asp:Button ID="btnAddEmployee" CssClass="btn btn-primary" Text="Add New Employee" runat="server" BorderSpacing="0" OnClick="btnAddEmployee_Click" />
     </div>
     <br />
+    <div>
+        <asp:Label runat="server" Text="Search"></asp:Label>
+        <br />
+        <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="txtSearch_TextChanged" AutoPostBack="true" Width="155px"></asp:TextBox>
+    </div>
+    <br />
     <asp:GridView ID="gvEmployees" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
         OnRowEditing="gvEmployees_RowEditing" OnRowCancelingEdit="gvEmployees_RowCancelingEdit" 
         OnRowDeleting="gvEmployees_RowDeleting" OnRowUpdating="gvEmployees_RowUpdating">

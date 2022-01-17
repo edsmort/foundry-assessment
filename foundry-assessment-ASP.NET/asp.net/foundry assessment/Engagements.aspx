@@ -26,10 +26,16 @@
         <asp:Button ID="btnAddEngagement" CssClass="btn btn-primary" Text="Add New Engagement" runat="server" BorderSpacing="0" OnClick="btnAddEngagement_Click" />
     </div>
     <br />
+    <div>
+        <asp:Label runat="server" Text="Search"></asp:Label>
+        <br />
+        <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="txtSearch_TextChanged" AutoPostBack="true" Width="155px"></asp:TextBox>
+    </div>
+    <br />
     <asp:GridView ID="gvEngagements" CssClass="table table-striped" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
         OnRowEditing="gvEngagements_RowEditing" OnRowCancelingEdit="gvEngagements_RowCancelingEdit" 
         OnRowUpdating="gvEngagements_RowUpdating" OnRowDeleting="gvEngagements_RowDeleting" 
-        OnRowCommand="gvEngagements_RowCommand" OnRowDataBound="gvEngagements_RowDataBound">
+        OnRowCommand="gvEngagements_RowCommand"><%-- OnRowDataBound="gvEngagements_RowDataBound"--%>
         <Columns>
             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="true" />
             <asp:BoundField DataField="Name" HeaderText="Name" />

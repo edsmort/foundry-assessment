@@ -274,5 +274,54 @@ namespace foundry_assessment
             }
 
         }
+
+        private DataTable GetEngagements()
+        {
+            DataTable dt = new DataTable();
+            if (gvEngagements.HeaderRow != null)
+            {
+                for (int i = 0; i < gvEngagements.HeaderRow.Cells.Count; i++)
+                {
+                    dt.Columns.Add(gvEngagements.HeaderRow.Cells[i].Text);
+                }
+            }
+
+            foreach (GridViewRow row in gvEngagements.Rows)
+            {
+                DataRow dr = dt.NewRow();
+
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    dr[i] = row.Cells[i].Text.Replace(" ", "");
+                }
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        private void SearchText()
+        {
+            DataTable dt = GetEngagements();
+            DataView dv = new DataView(dt);
+            string SearchExpression = null;
+
+            if (!String.IsNullOrEmpty(txtSearch.Text))
+            {
+                SearchExpression = String.Format("{0} '%{1}%'", gvEngagements.SortExpression, txtSearch.Text);
+                System.Diagnostics.Debug.WriteLine(SearchExpression);
+                dv.RowFilter = "Name like" + SearchExpression + "OR Client like" + SearchExpression + "OR Employee like" + SearchExpression + "OR Description like" + SearchExpression;
+                gvEngagements.DataSource = dv;
+                gvEngagements.DataBind();
+            }
+            else
+            {
+                GetEngagementsAndBind();
+            }
+        }
+
+        protected void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchText();
+        }
     }
 }
