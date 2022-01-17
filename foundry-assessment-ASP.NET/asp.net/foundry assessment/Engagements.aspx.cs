@@ -9,6 +9,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Data;
 using System.Text;
+using System.Drawing;
 
 namespace foundry_assessment
 {
@@ -243,6 +244,26 @@ namespace foundry_assessment
                 EndEngagement(id);
                 GetEngagementsAndBind();
             }
+        }
+
+        protected void gvEngagements_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (Convert.ToDateTime(e.Row.Cells[5].Text) > DateTime.Now && e.Row.Cells[6].Text == "&nbsp;") // "&nbsp" is the string
+                {
+                    e.Row.BackColor = Color.LightBlue;
+                }
+                else if (Convert.ToDateTime(e.Row.Cells[5].Text) < DateTime.Now && e.Row.Cells[6].Text == "&nbsp;") 
+                {
+                    e.Row.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    e.Row.BackColor = Color.LightGray;
+                }
+            }
+
         }
     }
 }
