@@ -26,7 +26,9 @@
         <asp:Button ID="btnAddEngagement" CssClass="btn btn-primary" Text="Add New Engagement" runat="server" BorderSpacing="0" OnClick="btnAddEngagement_Click" />
     </div>
     <br />
-    <asp:GridView ID="gvEngagements" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false">
+    <asp:GridView ID="gvEngagements" CssClass="table table-striped color-table" runat="server" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" 
+        OnRowEditing="gvEngagements_RowEditing" OnRowCancelingEdit="gvEngagements_RowCancelingEdit" 
+        OnRowUpdating="gvEngagements_RowUpdating" OnRowDeleting="gvEngagements_RowDeleting" OnRowCommand="gvEngagements_RowCommand">
         <Columns>
             <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="true" />
             <asp:BoundField DataField="Name" HeaderText="Name" />

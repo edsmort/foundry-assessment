@@ -15,6 +15,6 @@ namespace foundry_assessment.Models
         public string Employee { get; set; }
         public string Description { get; set; }
         public DateTime started { get; set; }
-        public DateTime ended { get; set; }
+        public Nullable<DateTime> ended { get; set; }
     }
 }
