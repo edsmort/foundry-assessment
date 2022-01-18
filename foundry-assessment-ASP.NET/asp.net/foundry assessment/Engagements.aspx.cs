@@ -259,6 +259,14 @@ namespace foundry_assessment
         {
             if (e.Row.RowType == DataControlRowType.DataRow) // ensure header row isn't processed
             {
+                if (e.Row.Cells[4].Text == "&amp;nbsp;") // conversion to dataview in search function changes formatting of null, manually converting back here
+                {
+                    e.Row.Cells[4].Text = "&nbsp;";
+                }
+                if (e.Row.Cells[6].Text == "&amp;nbsp;")
+                {
+                    e.Row.Cells[6].Text = "&nbsp;";
+                }
                 if (Convert.ToDateTime(e.Row.Cells[5].Text) > DateTime.Now && e.Row.Cells[6].Text == "&nbsp;") // "&nbsp" is the string version of null
                 {
                     e.Row.BackColor = Color.LightBlue;
@@ -272,7 +280,8 @@ namespace foundry_assessment
                     e.Row.BackColor = Color.LightGray;
                 }
             }
-
+            System.Diagnostics.Debug.WriteLine(e.Row.Cells[5].Text);
+            System.Diagnostics.Debug.WriteLine(e.Row.Cells[6].Text);
         }
 
         private DataTable GetEngagements()
@@ -292,7 +301,7 @@ namespace foundry_assessment
 
                 for (int i = 0; i < row.Cells.Count; i++)
                 {
-                    dr[i] = row.Cells[i].Text.Replace(" ", "");
+                    dr[i] = row.Cells[i].Text;
                 }
                 dt.Rows.Add(dr);
             }
