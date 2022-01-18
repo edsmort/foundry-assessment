@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Text;
 using System.Drawing;
+using System.Windows;
 
 namespace foundry_assessment
 {
@@ -191,12 +192,19 @@ namespace foundry_assessment
 
         protected void btnAddEngagement_Click(object sender, EventArgs e)
         {
-            AddEngagement(txtEngagement.Text, ddlClient.SelectedValue, ddlEmployee.SelectedValue, txtDescription.Text);
-            txtEngagement.Text = string.Empty;
-            txtDescription.Text = string.Empty;
-            ddlClient.SelectedIndex = 0;
-            ddlEmployee.SelectedIndex = 0;
-            GetEngagementsAndBind();
+            if (txtEngagement.Text == "")
+            {
+                MessageBox.Show("Please enter a name for the engagement");
+            }
+            else
+            {
+                AddEngagement(txtEngagement.Text, ddlClient.SelectedValue, ddlEmployee.SelectedValue, txtDescription.Text);
+                txtEngagement.Text = string.Empty;
+                txtDescription.Text = string.Empty;
+                ddlClient.SelectedIndex = 0;
+                ddlEmployee.SelectedIndex = 0;
+                GetEngagementsAndBind();
+            }
         }
 
         protected void gvEngagements_RowEditing(object sender, GridViewEditEventArgs e)
@@ -310,6 +318,7 @@ namespace foundry_assessment
 
         private void SearchText()
         {
+            GetEngagementsAndBind();
             DataTable dt = GetEngagements();
             DataView dv = new DataView(dt);
             string SearchExpression = null;

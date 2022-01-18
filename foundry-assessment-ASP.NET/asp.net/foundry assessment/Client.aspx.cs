@@ -148,6 +148,7 @@ namespace foundry_assessment
 
         private void SearchText()
         {
+            GetClientsAndBind();
             DataTable dt = GetClients();
             DataView dv = new DataView(dt);
             string SearchExpression = null;

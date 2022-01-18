@@ -4,15 +4,15 @@
     <br />
     <div>
         <asp:Panel ID="pnlAddEngagement" runat="server" Width="100%" Height="10%">
-            <asp:Label runat="server" Text="Enter Engagement Name"></asp:Label>
+            <asp:Label runat="server" Text="Enter Engagement Name *"></asp:Label>
             <br />
             <asp:TextBox ID="txtEngagement" runat="server" Width="157px"></asp:TextBox>
             <br />
-            <asp:Label runat="server" Text="Select Client"></asp:Label>
+            <asp:Label runat="server" Text="Select Client *"></asp:Label>
             <br />
             <asp:DropDownList ID="ddlClient" runat="server" Width="157px"></asp:DropDownList>
             <br />
-            <asp:Label runat="server" Text="Select Employee"></asp:Label>
+            <asp:Label runat="server" Text="Select Employee *"></asp:Label>
             <br />
             <asp:DropDownList ID="ddlEmployee" runat="server" Width="157px"></asp:DropDownList>
             <br />

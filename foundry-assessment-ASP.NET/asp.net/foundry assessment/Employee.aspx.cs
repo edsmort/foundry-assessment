@@ -151,6 +151,7 @@ namespace foundry_assessment
 
         private void SearchText()
         {
+            GetEmployeesAndBind(); 
             DataTable dt = GetEmployees();
             DataView dv = new DataView(dt);
             string SearchExpression = null;
